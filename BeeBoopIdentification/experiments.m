@@ -15,16 +15,19 @@ F2 = 'Crosswalk2.m4a';
 T = 5;
 y3 = y1(1:T*Fs);
 
+T2 = 20;
+y4 = y2(1:T2*Fs);
+
 %% Play
 
 % sound(y1,Fs)
 % sound(y2,Fs)
-sound(y3,Fs)
+% sound(y3,Fs)
 
 %% Spectrogram
 
 figure;
-spectrogram(y3,1024*2,1024,1024*8,Fs,'yaxis');
+spectrogram(y4,1024*2,1024,1024*8,Fs,'yaxis');
 
 %% Try LPF
 
@@ -43,7 +46,7 @@ spectrogram(fltY,1024*2,1024,1024*8,Fs,'yaxis');
 
 %% Play
 
-sound(fltY,Fs)
+% sound(fltY,Fs)
 
 %% Plot
 
