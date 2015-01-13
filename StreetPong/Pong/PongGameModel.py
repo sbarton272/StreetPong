@@ -18,7 +18,7 @@ import math
 #=====================================================
 
 # TODO figure out how else to get this const
-STARTING_VELOCITY_MAGNITUDE = 3
+STARTING_VELOCITY_MAGNITUDE = 10
 STARTING_VELOCITY_ANGLE = 30 # degrees
 
 #=====================================================
@@ -44,12 +44,14 @@ class PongGameModel(object):
         s.w = windowW
         s.h = windowH
         s.endZone = endZone
-        s.size = (s.w, w.h)
+        s.size = (s.w, s.h)
         s.startVelMag = STARTING_VELOCITY_MAGNITUDE
         s.startVelAngle = STARTING_VELOCITY_ANGLE
         s.ball = Ball(ballRadius)
         s.p1 = Player(name1, s.w, paddleWidth)
         s.p2 = Player(name2, s.w, paddleWidth)
+
+        s.reset()
 
     #==== Public Methods ========================================
 
@@ -105,29 +107,32 @@ class PongGameModel(object):
 
     def _checkCollisions(s):
 
-        s._checkWallBouce()
+        s._checkWallBounce()
 
         # Check paddle collisions and scores
         if (s.ball.y < s.endZone):
 
-            m = s.ball.vY / s.ball.vX
-            dY = s.endZone - s.ball.y
-            crossingPt = s.ball.x + dY/m
+            if s.ball.vX == 0:
+                crossingPt = s.ball.x
+            else:
+                m = s.ball.vX / s.ball.vY
+                dY = s.endZone - s.ball.y
+                crossingPt = s.ball.x + dY*m
 
             if (s.p1.isPaddleHit(crossingPt)):
                 s.ball.y += 2*dY
 
         elif ((s.h - s.ball.y) < s.endZone):
 
-            m = s.ball.vY / s.ball.vX
+            m = s.ball.vX / s.ball.vY
             dY = s.endZone - (s.h - s.ball.y)
-            crossingPt = s.ball.x - dY/m
+            crossingPt = s.ball.x - dY*m
 
             if (s.p1.isPaddleHit(crossingPt)):
                 s.ball.y -= 2*dY
 
         # Check wall bounce again for corner case
-        s._checkWallBouce()
+        s._checkWallBounce()
 
     def _checkWallBounce(s):
         # TODO account for ball radius
@@ -171,7 +176,7 @@ class PongGameModel(object):
         # Randomly determine up or down
         y = y * rnd.sample([-1,1], 1)[0]
         
-        return (x*mag, y*mag)
+        return (int(x*mag), int(y*mag))
 
 #=====================================================
 # Ball
@@ -203,7 +208,7 @@ class Ball(object):
 #=====================================================
 
 class Player(object):
-    N_PADDLE_STEPS = 20
+    N_PADDLE_STEPS = 100
 
     def __init__(s, name, boardWidth, paddleWidth):
         s.name = name
