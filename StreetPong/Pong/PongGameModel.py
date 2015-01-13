@@ -39,14 +39,15 @@ class PongGameModel(object):
     ----------
 
     """
-    def __init__(s, name1, name2, windowW, windowH, endZone, paddleWidth):
+    def __init__(s, name1, name2, windowW, windowH, endZone, paddleWidth,
+            ballRadius):
         s.w = windowW
         s.h = windowH
         s.endZone = endZone
         s.size = (s.w, w.h)
         s.startVelMag = STARTING_VELOCITY_MAGNITUDE
         s.startVelAngle = STARTING_VELOCITY_ANGLE
-        s.ball = Ball()
+        s.ball = Ball(ballRadius)
         s.p1 = Player(name1, s.w, paddleWidth)
         s.p2 = Player(name2, s.w, paddleWidth)
 
@@ -129,6 +130,7 @@ class PongGameModel(object):
         s._checkWallBouce()
 
     def _checkWallBounce(s):
+        # TODO account for ball radius
         # If collision, flip velocity and lose no energy
         if (s.ball.x < 0):
 
@@ -177,11 +179,12 @@ class PongGameModel(object):
 
 class Ball(object):
     
-    def __init__(s):
+    def __init__(s, radius):
         s.x = 0
         s.y = 0
         s.vX = 0
         s.vY = 0
+        s.radius = radius
 
     def setLoc(s,x,y):
         s.x = x
