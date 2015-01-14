@@ -95,7 +95,7 @@ class PongGameModel(object):
             dY = s.ball.top() - (s.h - s.endZone)
             crossingPt = s.ball.x + dY*m
 
-            if (s.p1.isPaddleHit(crossingPt)):
+            if (s.p2.isPaddleHit(crossingPt)):
                 s.ball.y -= 2*dY
                 s.ball.vY *= -1
             else:
