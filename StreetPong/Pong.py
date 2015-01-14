@@ -20,12 +20,19 @@ import Pong.PongGameView as View
 
 class Pong(object):
 
+    # TODO paddle velocity changes
+    # TODO pausing/timeout
+    # TODO better graphics
+    # TODO AI when in resting mode
+
     WIDTH, HEIGHT = 480, 480
-    PADDLE_W = 200
+    PADDLE_W = 50
     PADDLE_H = 6
     END_ZONE = 30
     BALL_RADIUS = 10
-    FPS = 20
+    FPS = 50
+    MAX_SCORE = 3
+    GAME_OVER_DELAY = 1200
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
@@ -46,14 +53,15 @@ class Pong(object):
         while True:
             cmds = s._handleEvts()
 
-            s.model.step(cmds[0], cmds[1])
-            s.view.show()
-            print s.model.ball.x, s.model.ball.y,
-            print s.model.ball.vX, s.model.ball.vY
-
-            clock.tick(s.FPS)
-
-            # TODO pause behavior
+            score = s.model.step(cmds[0], cmds[1])
+            
+            if max(score) == s.MAX_SCORE:
+                s.view.gameOver()
+                s.model.reset()
+                pg.time.wait(s.GAME_OVER_DELAY)
+            else:
+                s.view.show()
+                clock.tick(s.FPS)
        
     def _handleEvts(s):
         move1 = s.model.MV_STAY

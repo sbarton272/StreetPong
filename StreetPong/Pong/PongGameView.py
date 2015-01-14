@@ -43,13 +43,32 @@ class PongGameView(object):
     #==== Public Methods ========================================
 
     def show(s):
-        """
-        Show the game
-        """
         s._showBoard()
         s._showPaddles()
         s._showBall()
         s._showScores()
+        pg.display.flip()
+
+    def gameOver(s):
+        s._showBoard()
+        s._showPaddles()
+        s._showBall()
+        s._showScores()
+
+        if s.game.p1.score > s.game.p2.score:
+            string = "Player 1 Wins!"
+        elif s.game.p1.score < s.game.p2.score:
+            string = "Player 2 Wins!"
+        else:
+            string = "It's a tie"
+
+        font = pg.font.Font(None, FONT_SIZE)
+        text = font.render(string, 1, GRAY)
+        textpos = text.get_rect()
+        textpos.centerx = s.screen.get_rect().centerx
+        textpos.centery = s.screen.get_rect().centery
+        s.screen.blit(text, textpos)
+
         pg.display.flip()
 
     def _showBoard(s):

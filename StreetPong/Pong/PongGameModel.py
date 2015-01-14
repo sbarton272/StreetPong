@@ -14,14 +14,6 @@ import random as rnd
 import math
 
 #=====================================================
-# Constants
-#=====================================================
-
-# TODO figure out how else to get this const
-STARTING_VELOCITY_MAGNITUDE = 5
-STARTING_VELOCITY_ANGLE = 30 # degrees
-
-#=====================================================
 # PongGame
 #=====================================================
 
@@ -32,6 +24,8 @@ class PongGameModel(object):
     SCORE_NONE = 0
     SCORE_P1 = 1
     SCORE_P2 = 2
+    STARTING_VEL_ANGLE = 30
+    STARTING_VEL_MAG = 5
 
     """
     PongGame model for paddles and ball dynamics and control
@@ -46,8 +40,6 @@ class PongGameModel(object):
         s.h = windowH
         s.endZone = endZone
         s.size = (s.w, s.h)
-        s.startVelMag = STARTING_VELOCITY_MAGNITUDE
-        s.startVelAngle = STARTING_VELOCITY_ANGLE
         s.ball = Ball(ballRadius)
         s.p1 = Player(name1, s.w, paddleWidth)
         s.p2 = Player(name2, s.w, paddleWidth)
@@ -57,39 +49,11 @@ class PongGameModel(object):
     #==== Public Methods ========================================
 
     def reset(s):
-        """
-        Reset the game to the start state
-        1) Set paddle locations
-        2) Set ball location
-        3) Set random ball velocity
-
-        Parameters
-        ----------
-
-        """
         s._resetBoard()
         s.p1.setScore(0)
         s.p2.setScore(0)
 
     def step(s,paddleMove1,paddleMove2):
-        """
-        Step the game
-        1) Set the paddle locations
-        2) Set ball location
-        3) Check for collisions and update ball location
-        4) Check and update score
-        5) Check win condition
-
-        Parameters
-        ----------
-        paddleMove1     right or left
-        paddleMove2     right or left
-
-        Returns
-        -------
-        Current scores tuple
-
-        """
         s.p1.move(paddleMove1)
         s.p2.move(paddleMove2)
         s.ball.step()
@@ -157,31 +121,18 @@ class PongGameModel(object):
 
     def _resetBoard(s):
         s.ball.setLoc(s.w/2, s.h/2)
-        s.ball.setVel(s._rndBallVel(s.startVelAngle, s.startVelMag))
+        s.ball.setVel(s._rndBallVel(s.STARTING_VEL_ANGLE/2,
+                s.STARTING_VEL_ANGLE, s.STARTING_VEL_MAG))
         s.p1.setLoc(s.w/2)
         s.p2.setLoc(s.w/2)
 
-    def _rndBallVel(s, angle, mag):
-        """
-        Generate a random velocity with the specified magnitude that points
-        either up or down but no more than the specified angle off of the 
-        horizontal line.
-
-        Parameters
-        ----------
-        s       PongGame object
-        angle   Maximum offset from horizontal in degrees
-        mag     Magnitude of the velocity vector
-
-        Returns
-        -------
-        Velocity tuple (x,y)        
-        """
-        maxX = math.sin(math.radians(angle))
-        x = rnd.uniform(-maxX, maxX)
+    def _rndBallVel(s, minAngle, maxAngle, mag):
+        angle = rnd.uniform(minAngle,maxAngle)
+        x = math.sin(math.radians(angle))
         y = 1 - x*x
 
-        # Randomly determine up or down
+        # Randomly determine up or down/right or left
+        x = x * rnd.sample([-1,1], 1)[0]
         y = y * rnd.sample([-1,1], 1)[0]
         
         return (int(x*mag), int(y*mag))
