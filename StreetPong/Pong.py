@@ -24,6 +24,7 @@ class Pong(object):
     # TODO pausing/timeout
     # TODO better graphics
     # TODO AI when in resting mode
+    # TODO full screen
 
     WIDTH, HEIGHT = 480, 480
     PADDLE_W = 50
