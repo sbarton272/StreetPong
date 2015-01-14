@@ -20,7 +20,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (127, 127, 127)
 MIDLINE_H = 6
-FONT_SIZE = 36
+FONT_SIZE = 60
 
 #=====================================================
 # PongGame
@@ -49,7 +49,7 @@ class PongGameView(object):
         s._showBoard()
         s._showPaddles()
         s._showBall()
-        #s._showScore()
+        s._showScores()
         pg.display.flip()
 
     def _showBoard(s):
@@ -61,23 +61,33 @@ class PongGameView(object):
 
     def _showPaddles(s):
         p1 = s.game.p1
-        rect = pg.Rect(p1.paddleLoc - s.paddleW/2, s.endZone, s.paddleW, s.paddleH)
+        rect = pg.Rect(p1.paddleLoc - s.paddleW/2, s.endZone - s.paddleH, s.paddleW, s.paddleH)
         pg.draw.rect(s.screen, WHITE, rect)
 
         p2 = s.game.p2
         rect = pg.Rect(p2.paddleLoc - s.paddleW/2, s.h - s.endZone, s.paddleW, s.paddleH)
         pg.draw.rect(s.screen, WHITE, rect)
         
-    def _showScore(s):
-        # TODO
+    def _showScores(s):
         font = pg.font.Font(None, FONT_SIZE)
+
+        x = s.screen.get_rect().w / 6
+        y = s.screen.get_rect().h / 3
+
         text = font.render(str(s.game.p1.score), 1, GRAY)
         textpos = text.get_rect()
-        textpos.centerx = s.screen.get_rect().centerx
+        textpos.centerx = x
+        textpos.centery = y
+        s.screen.blit(text, textpos)
+
+        text = font.render(str(s.game.p2.score), 1, GRAY)
+        textpos = text.get_rect()
+        textpos.centerx = x
+        textpos.centery = 2*y
         s.screen.blit(text, textpos)
 
     def _showBall(s):
         ball = s.game.ball
         pos = (ball.x, ball.y)
-        pg.draw.circle(s.screen, WHITE, pos, s.ballRadius)
+        pg.draw.circle(s.screen, GRAY, pos, s.ballRadius)
         

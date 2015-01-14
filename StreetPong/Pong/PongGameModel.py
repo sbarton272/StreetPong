@@ -18,7 +18,7 @@ import math
 #=====================================================
 
 # TODO figure out how else to get this const
-STARTING_VELOCITY_MAGNITUDE = 10
+STARTING_VELOCITY_MAGNITUDE = 5
 STARTING_VELOCITY_ANGLE = 30 # degrees
 
 #=====================================================
@@ -26,8 +26,9 @@ STARTING_VELOCITY_ANGLE = 30 # degrees
 #=====================================================
 
 class PongGameModel(object):
-    MV_RIGHT = 0
-    MV_LEFT  = 1
+    MV_STAY = 0
+    MV_RIGHT = 1
+    MV_LEFT  = 2
     SCORE_NONE = 0
     SCORE_P1 = 1
     SCORE_P2 = 2
@@ -107,44 +108,51 @@ class PongGameModel(object):
 
     def _checkCollisions(s):
 
+        rsp = s.SCORE_NONE
+
         s._checkWallBounce()
 
         # Check paddle collisions and scores
-        if (s.ball.y < s.endZone):
+        if (s.ball.bottom() < s.endZone):
 
-            if s.ball.vX == 0:
-                crossingPt = s.ball.x
-            else:
-                m = s.ball.vX / s.ball.vY
-                dY = s.endZone - s.ball.y
-                crossingPt = s.ball.x + dY*m
+            m = s.ball.vX / s.ball.vY
+            dY = s.endZone - s.ball.bottom()
+            crossingPt = s.ball.x + dY*m
 
             if (s.p1.isPaddleHit(crossingPt)):
                 s.ball.y += 2*dY
+                s.ball.vY *= -1
+            else:
+                rsp = s.SCORE_P1
 
-        elif ((s.h - s.ball.y) < s.endZone):
+        elif (s.ball.top() > (s.h - s.endZone)):
 
             m = s.ball.vX / s.ball.vY
-            dY = s.endZone - (s.h - s.ball.y)
-            crossingPt = s.ball.x - dY*m
+            dY = s.ball.top() - (s.h - s.endZone)
+            crossingPt = s.ball.x + dY*m
 
             if (s.p1.isPaddleHit(crossingPt)):
                 s.ball.y -= 2*dY
+                s.ball.vY *= -1
+            else:
+                rsp = s.SCORE_P2
 
         # Check wall bounce again for corner case
         s._checkWallBounce()
 
-    def _checkWallBounce(s):
-        # TODO account for ball radius
-        # If collision, flip velocity and lose no energy
-        if (s.ball.x < 0):
+        return rsp
 
-            s.ball.x *= -1
+    def _checkWallBounce(s):
+
+        # If collision, flip velocity and lose no energy
+        if (s.ball.left() < 0):
+
+            s.ball.x = s.ball.x - 2*s.ball.left()
             s.ball.vX *= -1
 
-        elif (s.ball.x > s.w):
+        elif (s.ball.right() > s.w):
 
-            s.ball.x += 2*(s.w - s.ball.x)
+            s.ball.x = s.ball.x + 2*(s.w - s.ball.right())
             s.ball.vX *= -1
 
     def _resetBoard(s):
@@ -203,18 +211,30 @@ class Ball(object):
         s.x += s.vX
         s.y += s.vY
 
+    def left(s):
+        return s.x - s.radius
+
+    def right(s):
+        return s.x + s.radius
+
+    def bottom(s):
+        return s.y - s.radius
+
+    def top(s):
+        return s.y + s.radius
+
 #=====================================================
 # Player
 #=====================================================
 
 class Player(object):
-    N_PADDLE_STEPS = 100
+    N_PADDLE_STEPS = 50
 
     def __init__(s, name, boardWidth, paddleWidth):
         s.name = name
         s.boardWidth = boardWidth
         s.paddleWidth = paddleWidth
-        s.paddleStep = boardWidth / 10
+        s.paddleStep = boardWidth / s.N_PADDLE_STEPS
         s.paddleLoc = boardWidth / 2
         s.score = 0
 
@@ -225,14 +245,19 @@ class Player(object):
         if (paddleMove == PongGameModel.MV_RIGHT):
             
             edge = s.paddleLoc + s.paddleWidth/2
-            if ((s.boardWidth - edge) > s.paddleStep):
+            diff = s.boardWidth - edge
+            if (diff > s.paddleStep):
                 s.paddleLoc += s.paddleStep
+            else:
+                s.paddleLoc += diff
         
         elif (paddleMove == PongGameModel.MV_LEFT):        
             
             edge = s.paddleLoc - s.paddleWidth/2
             if (edge > s.paddleStep):
                 s.paddleLoc -= s.paddleStep
+            else:
+                s.paddleLoc -= edge
 
     def isPaddleHit(s, loc):
         right = s.paddleLoc + s.paddleWidth/2

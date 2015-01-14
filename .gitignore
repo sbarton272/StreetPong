@@ -30,3 +30,6 @@
 
 # Matlab
 *.asv
+
+# Python
+*.pyc
