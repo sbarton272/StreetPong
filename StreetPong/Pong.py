@@ -20,11 +20,11 @@ import Pong.PongGameView as View
 
 class Pong(object):
 
-    # TODO paddle velocity changes
     # TODO pausing/timeout
     # TODO better graphics
     # TODO AI when in resting mode
     # TODO full screen
+    # TODO ball goes over endline
 
     WIDTH, HEIGHT = 480, 480
     PADDLE_W = 50
@@ -33,13 +33,14 @@ class Pong(object):
     BALL_RADIUS = 10
     FPS = 50
     MAX_SCORE = 3
-    GAME_OVER_DELAY = 1200
+    GAME_OVER_DELAY = 4800
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
 
         pg.init()
-        s.screen = pg.display.set_mode(s.size)
+        s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
+        # s.screen = pg.display.set_mode(s.size)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
@@ -77,13 +78,22 @@ class Pong(object):
             move2 = s.model.MV_LEFT
         elif pressed[pg.K_l]:
             move2 = s.model.MV_RIGHT
+        elif pressed[pg.K_q]:
+            s._quit()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                # TODO end game behavior
-                sys.exit()
+                s._quit()
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_q:
+                    s._quit()
 
         return (move1, move2)
+
+    def _quit(s):
+        pg.display.quit()
+        sys.exit()
+
 
 if __name__ == '__main__':
     pong = Pong()

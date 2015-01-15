@@ -63,10 +63,10 @@ class PongGameView(object):
             string = "It's a tie"
 
         font = pg.font.Font(None, FONT_SIZE)
-        text = font.render(string, 1, GRAY)
+        text = font.render(string, 1, WHITE)
         textpos = text.get_rect()
         textpos.centerx = s.screen.get_rect().centerx
-        textpos.centery = s.screen.get_rect().centery
+        textpos.centery = s.screen.get_rect().centery - 2*textpos.h/2
         s.screen.blit(text, textpos)
 
         pg.display.flip()

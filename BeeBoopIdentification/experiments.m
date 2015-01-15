@@ -20,7 +20,7 @@ y4 = y2(1:T2*Fs);
 
 %% Play
 
-% sound(y1,Fs)
+sound(y1,Fs)
 % sound(y2,Fs)
 % sound(y3,Fs)
 
