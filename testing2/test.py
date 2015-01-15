@@ -33,7 +33,7 @@ x = 0
 state = 'on'
 ## loop
 while 1:
-  if( x == 1000 ):
+  if( x == 1000000 ):
     if ( state == 'on' ):
       file = open(led_pin, 'r+')
       file.write(LOW)
