@@ -14,6 +14,40 @@ import pygame as pg
 import sys
 import Pong.PongGameModel as Model
 import Pong.PongGameView as View
+
+# for gpio
+import os
+#=====================================================
+# set up gpio
+#=====================================================
+GPIO_MODE_PATH = os.path.normpath('/sys/devices/virtual/misc/gpio/mode/')
+GPIO_PIN_PATH = os.path.normpath('/sys/devices/virtual/misc/gpio/pin/')
+GPIO_FILENAME = "gpio"
+
+HIGH = "1"
+LOW = "0"
+INPUT = "0"
+OUTPUT = "1"
+INPUT_PU = "8"
+
+#=====================================================
+# set pins to be inputs
+#=====================================================
+
+buttonL_pin_mode = os.path.join(GPIO_MODE_PATH, 'gpio'+str(7))
+buttonR_pin_mode = os.path.join(GPIO_MODE_PATH, 'gpio'+str(12))
+
+buttonL_pin = os.path.join(GPIO_PIN_PATH, 'gpio'+str(7))
+buttonR_pin = os.path.join(GPIO_PIN_PATH, 'gpio'+str(12))
+
+file = open(buttonL_pin_mode, 'r+')
+file.write(INPUT)
+file.close()
+
+file = open(buttonR_pin_mode, 'r+')
+file.write(INPUT)
+file.close()
+
 #=====================================================
 # Pong
 #=====================================================
