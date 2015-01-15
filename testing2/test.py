@@ -33,7 +33,7 @@ x = 0
 state = 'on'
 ## loop
 while 1:
-  if( x == 1000000 ):
+  """if( x == 1000000 ):
     if ( state == 'on' ):
       file = open(led_pin, 'r+')
       file.write(LOW)
@@ -46,16 +46,16 @@ while 1:
       state = 'on'
     x = 0
   else:
-    x = x+1
-#  temp = ['']
- # file = open(button_pin, 'r')
-  #temp[0] = file.read()
-  #file.close()
-#  if( '0' in temp[0]):
- #   file = open(led_pin, 'r+')
-  #  file.write(HIGH)
-   # file.close()
- # else:
-  #  file = open(led_pin,'r+')
-   # file.write(LOW)
-    #file.close()
+    x = x+1"""
+  temp = ['']
+  file = open(button_pin, 'r')
+  temp[0] = file.read()
+  file.close()
+  if( '0' in temp[0]):
+    file = open(led_pin, 'r+')
+    file.write(HIGH)
+    file.close()
+  else:
+    file = open(led_pin,'r+')
+    file.write(LOW)
+    file.close()
