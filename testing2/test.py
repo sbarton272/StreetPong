@@ -29,3 +29,33 @@ file.close()
 file = open(led_pin, 'r+')
 file.write(LOW)
 file.close()
+x = 0
+state = 'on'
+## loop
+while 1:
+  if( x == 1000 ):
+    if ( state == 'on' ):
+      file = open(led_pin, 'r+')
+      file.write(LOW)
+      file.close()
+      state = 'off'
+    else:
+      file = open(led_pin,'r+')
+      file.write(HIGH)
+      file.close()
+      state = 'on'
+    x = 0
+  else:
+    x = x+1
+#  temp = ['']
+ # file = open(button_pin, 'r')
+  #temp[0] = file.read()
+  #file.close()
+#  if( '0' in temp[0]):
+ #   file = open(led_pin, 'r+')
+  #  file.write(HIGH)
+   # file.close()
+ # else:
+  #  file = open(led_pin,'r+')
+   # file.write(LOW)
+    #file.close()
