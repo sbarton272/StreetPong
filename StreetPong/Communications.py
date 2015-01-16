@@ -20,7 +20,7 @@ class Communications(object):
 		return eval(s.port.readline().strip())
 
 	def writeByte(s, b):
-		s.port.write(b)
+		s.port.write(str(b))
 
 	def readByte(s):
 		return s.port.read()
