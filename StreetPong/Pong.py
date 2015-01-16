@@ -71,9 +71,10 @@ class PongMaster(object):
         while True:
 
             # Get moves
-            mv = int(s.coms.readByte())
+            mv1 = s._getBtns()
+            mv2 = int(s.coms.readByte())
             cmds = s._handleEvts()
-            score = s.model.step(cmds[0], mv)
+            score = s.model.step(mv1, mv2)
             
             if max(score) == s.MAX_SCORE:
                 
