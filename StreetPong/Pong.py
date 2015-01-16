@@ -87,7 +87,7 @@ class PongMaster(object):
                 # Cont game over
                 s.view.gameOver()
 
-            elif s.gameOver = 0:
+            elif s.gameOver == 0:
 
                 s.model.reset()
 
