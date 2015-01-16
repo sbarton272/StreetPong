@@ -48,13 +48,11 @@ class Communications(object):
 
     def readGameState(s):
         m = ''
-        i = 0
         while len(m) <= 1:
-            i += 1
             m = s.port.readline().strip()
-            print 'Coms read', i, m
 
         args = m.split(' ')
+        print 'Coms read', args
 
         gameState = {}
         gameState['paddle1'] = int(args[0])
