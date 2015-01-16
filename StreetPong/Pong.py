@@ -31,7 +31,7 @@ class PongMaster(object):
     # TODO larger paddles
     # TODO ball speed-up
 
-    WIDTH, HEIGHT = 480*2, 480
+    WIDTH, HEIGHT = 1200, 600
     PADDLE_W = 50
     PADDLE_H = 6
     END_ZONE = 30
