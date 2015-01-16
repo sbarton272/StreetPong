@@ -33,7 +33,7 @@ class Communications(object):
         print 'Communincations spec out'
 
     def writeDict(s, d):
-        s.port.write(repr(d) + s.TERM)
+        s.port.write(repr(d))
 
     def readDict(s):
         return eval(s.port.readline())
