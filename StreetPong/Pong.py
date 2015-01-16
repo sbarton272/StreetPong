@@ -38,7 +38,7 @@ class PongMaster(object):
     BALL_RADIUS = 10
     FPS = 80
     MAX_SCORE = 3
-    GAME_OVER_DELAY = 180
+    GAME_OVER_DELAY = 60
     LEFT_BTN = 7
     RIGHT_BTN = 12
 
