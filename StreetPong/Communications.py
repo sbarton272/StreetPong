@@ -42,7 +42,7 @@ class Communications(object):
         args.append(str(gs['ballY']))
         args.append(str(gs['gameOver']))
 
-        msg = '   '.join(args)
+        msg = ' '.join(args)
         print 'Coms write', msg
         s.port.write(msg + s.TERM)
 
