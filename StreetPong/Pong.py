@@ -96,7 +96,7 @@ class PongMaster(object):
             gameState = s._packageGameState();
 
             # Send state to remote
-            s.coms.writeDict(gameState)
+            s.coms.writeGameState(gameState)
 
             if s.gameOver:
                 pg.time.wait(s.GAME_OVER_DELAY)
@@ -170,7 +170,7 @@ class PongSlave(PongMaster):
             # Send button presses
             s.coms.writeByte(s._getBtns())
 
-            gameState = s.coms.readDict()
+            gameState = s.coms.readGameState()
 
             # Playing
             s.model.set(gameState['paddle1'], gameState['paddle2'],
