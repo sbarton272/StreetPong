@@ -49,8 +49,8 @@ class PongMaster(object):
         s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
 
         pg.init()
-        # s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
-        s.screen = pg.display.set_mode(s.size)
+        s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
+        #s.screen = pg.display.set_mode(s.size)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
@@ -108,15 +108,7 @@ class PongMaster(object):
         move2 = s.model.MV_STAY
 
         pressed = pg.key.get_pressed()
-        if pressed[pg.K_a]:
-            move1 = s.model.MV_LEFT
-        elif pressed[pg.K_d]:
-            move1 = s.model.MV_RIGHT
-        elif pressed[pg.K_j]:
-            move2 = s.model.MV_LEFT
-        elif pressed[pg.K_l]:
-            move2 = s.model.MV_RIGHT
-        elif pressed[pg.K_q]:
+        if pressed[pg.K_q]:
             s._quit()
 
         for event in pg.event.get():
