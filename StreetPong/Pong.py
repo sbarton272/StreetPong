@@ -62,6 +62,8 @@ class PongMaster(object):
     #==== Public Methods ========================================
 
     def run(s):
+        s.coms.testMaster()
+
         clock = pg.time.Clock()
 
         while True:
@@ -152,6 +154,7 @@ class PongSlave(PongMaster):
         PongMaster.__init__(s)
 
     def run(s):
+        s.coms.testSlave()
 
         clock = pg.time.Clock()
 
