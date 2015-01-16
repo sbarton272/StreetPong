@@ -32,18 +32,39 @@ class Communications(object):
         print 'Slave recieved', rsp
         print 'Communincations spec out'
 
-    def writeDict(s, d):
-        print 'Coms write', d
-        s.port.write(repr(d) + s.TERM)
+    def writeGameState(s, gs):
+        args = []
+        args.append(gameState['paddle1'])
+        args.append(gameState['paddle2'])
+        args.append(gameState['score1'])
+        args.append(gameState['score2'])
+        args.append(gameState['ballX'])
+        args.append(gameState['ballY'])
+        args.append(gameState['gameOver'])
 
-    def readDict(s):
-        d = ''
+        msg = ' '.join(args)
+        print 'Coms write', msg
+        s.port.write(msg + s.TERM)
+
+    def readGameState(s):
+        m = ''
         i = 0
         while len(d) <= 1:
             i += 1
-            d = s.port.readline().strip()
-            print 'Coms read', i, d
-        return eval(d)
+            m = s.port.readline().strip()
+            print 'Coms read', i, m
+
+        args = m.split(' ')
+
+        gameState = {}
+        gameState['paddle1'] = args[0]
+        gameState['paddle2'] = args[1]
+        gameState['score1'] = args[2]
+        gameState['score2'] = args[3]
+        gameState['ballX'] = args[4]
+        gameState['ballY'] = args[5]
+        gameState['gameOver'] = args[6]
+        return gameState
 
     def writeByte(s, b):
         print 'Coms write', b

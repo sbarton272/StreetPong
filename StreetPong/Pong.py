@@ -144,8 +144,12 @@ class PongMaster(object):
         gameState['paddle2'] = s.model.p2.paddleLoc
         gameState['score1'] = s.model.p1.score
         gameState['score2'] = s.model.p2.score
-        gameState['ball'] = (s.model.ball.x, s.model.ball.y)
-        gameState['gameOver'] = s.gameOver
+        gameState['ballX'] = s.model.ball.x
+        gameState['ballY'] = s.model.ball.y
+        if s.gameOver:
+            gameState['gameOver'] = 1
+        else:
+            gameState['gameOver'] = 0
         return gameState
 
     def _quit(s):
@@ -170,9 +174,9 @@ class PongSlave(PongMaster):
 
             # Playing
             s.model.set(gameState['paddle1'], gameState['paddle2'],
-                gameState['score1'], gameState['score2'], gameState['ball'])
+                gameState['score1'], gameState['score2'], (gameState['ballX'], gameState['ballY']))
 
-            if gameState['gameOver']:
+            if gameState['gameOver'] == 1:
                 s.view.gameOver()
             else:
                 s.view.show()
