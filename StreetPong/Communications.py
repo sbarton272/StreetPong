@@ -5,6 +5,7 @@ class Communications(object):
 
 	BAUD = 115200
 	PORT = '/dev/ttyS1'
+	TERM = '\n'
 	TEST_MSG = 'Huston we have a problem'
 
 	def __init__(s):
@@ -32,7 +33,7 @@ class Communications(object):
 		print 'Communincations spec out'
 
 	def writeDict(s, d):
-		s.port.write(repr(d))
+		s.port.write(repr(d) + s.TERM)
 
 	def readDict(s):
 		return eval(s.port.readline().strip())
@@ -44,7 +45,7 @@ class Communications(object):
 		return s.port.read()
 
 	def write(s, msg):
-		s.port.write(msg)
+		s.port.write(msg + s.TERM)
 
 	def read(s):
 		return s.port.readline()
