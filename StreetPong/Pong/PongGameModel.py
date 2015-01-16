@@ -26,6 +26,7 @@ class PongGameModel(object):
     SCORE_P2 = 2
     STARTING_VEL_ANGLE = 30
     STARTING_VEL_MAG = 10
+    VEL_INC = 1;
 
     """
     PongGame model for paddles and ball dynamics and control
@@ -92,7 +93,8 @@ class PongGameModel(object):
 
             if (s.p1.isPaddleHit(crossingPt)):
                 s.ball.y += 2*dY
-                s.ball.vY *= -1
+                s.ball.vY *= -1 
+                s.ball.vY += s.VEL_INC
             else:
                 rsp = s.SCORE_P1
 
@@ -105,6 +107,7 @@ class PongGameModel(object):
             if (s.p2.isPaddleHit(crossingPt)):
                 s.ball.y -= 2*dY
                 s.ball.vY *= -1
+                s.ball.vY -= s.VEL_INC
             else:
                 rsp = s.SCORE_P2
 
