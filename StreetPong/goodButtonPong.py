@@ -102,13 +102,25 @@ class Pong(object):
     def _handleEvts(s):
         move1 = s.model.MV_STAY
         move2 = s.model.MV_STAY
-
+        
+        # getting input from L button
+        tempL = ['']
+        file = open(buttonL_pin, 'r')
+        tempL[0] = file.read()
+        file.close()
+        
+        # getting input from R button
+        tempR = ['']
+        file = open(buttonR_pin, 'r')
+        tempR[0] = file.read()
+        file.close()
+        
         pressed = pg.key.get_pressed()
-        if pressed[pg.K_a]:
+        if ( '0' in tempL[0] ) :
             move1 = s.model.MV_LEFT
-        elif pressed[pg.K_d]:
+        elif ( '0' in tempR[0] ) :
             move1 = s.model.MV_RIGHT
-        elif pressed[pg.K_j]:
+        if pressed[pg.K_j]:
             move2 = s.model.MV_LEFT
         elif pressed[pg.K_l]:
             move2 = s.model.MV_RIGHT
