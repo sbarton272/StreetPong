@@ -34,13 +34,13 @@ class Communications(object):
 
     def writeGameState(s, gs):
         args = []
-        args.append(gameState['paddle1'])
-        args.append(gameState['paddle2'])
-        args.append(gameState['score1'])
-        args.append(gameState['score2'])
-        args.append(gameState['ballX'])
-        args.append(gameState['ballY'])
-        args.append(gameState['gameOver'])
+        args.append(gs['paddle1'])
+        args.append(gs['paddle2'])
+        args.append(gs['score1'])
+        args.append(gs['score2'])
+        args.append(gs['ballX'])
+        args.append(gs['ballY'])
+        args.append(gs['gameOver'])
 
         msg = ' '.join(args)
         print 'Coms write', msg
@@ -49,7 +49,7 @@ class Communications(object):
     def readGameState(s):
         m = ''
         i = 0
-        while len(d) <= 1:
+        while len(m) <= 1:
             i += 1
             m = s.port.readline().strip()
             print 'Coms read', i, m
