@@ -14,17 +14,20 @@ import pygame as pg
 import sys
 import Pong.PongGameModel as Model
 import Pong.PongGameView as View
+
 #=====================================================
 # Pong
 #=====================================================
 
 class Pong(object):
 
-    # TODO pausing/timeout
+    # TODO pausing/timeout if no input
     # TODO better graphics
     # TODO AI when in resting mode
-    # TODO full screen
+    # TODO correct screen size
     # TODO ball goes over endline
+    # TODO larger paddles
+    # TODO ball speed-up
 
     WIDTH, HEIGHT = 480, 480
     PADDLE_W = 50
@@ -39,13 +42,15 @@ class Pong(object):
         s.size = (s.WIDTH, s.HEIGHT)
 
         pg.init()
-        s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
-        # s.screen = pg.display.set_mode(s.size)
+        # s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
+        s.screen = pg.display.set_mode(s.size)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
         s.view = View.PongGameView(s.model, s.screen, s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W, s.PADDLE_H, 
                 s.BALL_RADIUS)
+
+        s.paused = False
 
     #==== Public Methods ========================================
 
@@ -58,10 +63,20 @@ class Pong(object):
             score = s.model.step(cmds[0], cmds[1])
             
             if max(score) == s.MAX_SCORE:
+                # Game over
+
                 s.view.gameOver()
                 s.model.reset()
                 pg.time.wait(s.GAME_OVER_DELAY)
+
+            elif s.paused:
+
+                # Paused
+                pass
+
             else:
+                
+                # Playing
                 s.view.show()
                 clock.tick(s.FPS)
        
