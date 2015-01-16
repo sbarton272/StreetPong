@@ -58,6 +58,8 @@ class PongMaster(object):
                 s.BALL_RADIUS)
 
         s.paused = False
+        s.gameOver = False
+
 
     #==== Public Methods ========================================
 
@@ -77,6 +79,7 @@ class PongMaster(object):
                 
                 # Game over
                 s.view.gameOver()
+                s.gameOver = True
                 s.model.reset()
 
             elif s.paused:
@@ -85,7 +88,7 @@ class PongMaster(object):
                 pass
 
             else:
-                
+
                 # Playing
                 s.view.show()
                 clock.tick(s.FPS)
@@ -95,9 +98,9 @@ class PongMaster(object):
             # Send state to remote
             s.coms.writeDict(gameState)
 
-            if gameState['gameOver']:
+            if s.gameOver:
                 pg.time.wait(s.GAME_OVER_DELAY)
-
+                s.gameOver = False
        
     def _handleEvts(s):
         move1 = s.model.MV_STAY
@@ -142,6 +145,7 @@ class PongMaster(object):
         gameState['score1'] = s.model.p1.score
         gameState['score2'] = s.model.p2.score
         gameState['ball'] = (s.model.ball.x, s.model.ball.y)
+        gameState['gameOver'] = s.gameOver
         return gameState
 
     def _quit(s):
