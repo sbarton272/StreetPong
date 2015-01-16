@@ -45,6 +45,8 @@ class Buttons(object):
         tempR[0] = FP.read()
         FP.close()
 
+        print 'Buttons', tempL, tempR
+
         if ( '0' in tempL[0] ):
             move = s.LEFT
         elif ( '0' in tempR[0] ):
