@@ -71,7 +71,7 @@ class PongMaster(object):
         while True:
 
             # Get moves
-            mv = s.coms.readByte()
+            mv = int(s.coms.readByte())
             cmds = s._handleEvts()
             score = s.model.step(cmds[0], mv)
             
@@ -79,7 +79,7 @@ class PongMaster(object):
                 
                 # Game over start
                 s.view.gameOver()
-                s.gameOver = GAME_OVER_DELAY
+                s.gameOver = s.GAME_OVER_DELAY
 
             elif s.gameOver > 0:
 
