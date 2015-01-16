@@ -31,12 +31,12 @@ class PongMaster(object):
     # TODO larger paddles
     # TODO ball speed-up
 
-    WIDTH, HEIGHT = 480, 480
+    WIDTH, HEIGHT = 480*2, 480
     PADDLE_W = 50
     PADDLE_H = 6
     END_ZONE = 30
     BALL_RADIUS = 10
-    FPS = 50
+    FPS = 80
     MAX_SCORE = 3
     GAME_OVER_DELAY = 180
     LEFT_BTN = 7
