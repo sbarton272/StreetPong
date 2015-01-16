@@ -25,7 +25,7 @@ class PongGameModel(object):
     SCORE_P1 = 1
     SCORE_P2 = 2
     STARTING_VEL_ANGLE = 30
-    STARTING_VEL_MAG = 5
+    STARTING_VEL_MAG = 10
 
     """
     PongGame model for paddles and ball dynamics and control
