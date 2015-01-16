@@ -31,18 +31,19 @@ class PongMaster(object):
     # TODO larger paddles
     # TODO ball speed-up
 
-    WIDTH, HEIGHT = 480, 480
-    PADDLE_W = 50
-    PADDLE_H = 6
-    END_ZONE = 30
-    BALL_RADIUS = 10
-    FPS = 50
-    MAX_SCORE = 3
-    GAME_OVER_DELAY = 4800
-    LEFT_BTN = 7
-    RIGHT_BTN = 12
-
     def __init__(s):
+        s.WIDTH = 480
+        s.HEIGHT = 480
+        s.PADDLE_W = 50
+        s.PADDLE_H = 6
+        s.END_ZONE = 30
+        s.BALL_RADIUS = 10
+        s.FPS = 50
+        s.MAX_SCORE = 3
+        s.GAME_OVER_DELAY = 4800
+        s.LEFT_BTN = 7
+        s.RIGHT_BTN = 12
+
         s.size = (s.WIDTH, s.HEIGHT)
 
         s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
@@ -179,7 +180,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.master:
+        print 'Starting MASTER'
         pong = PongMaster()
     else:
+        print 'Starting SLAVE'
         pong = PongSlave()
     pong.run()
