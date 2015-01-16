@@ -178,10 +178,12 @@ class PongSlave(PongMaster):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m','--master', nargs='?', help='specify master')
+    parser.add_argument('--master', dest='isMaster', action='store_true')
+    parser.add_argument('--slave', dest='isMaster', action='store_false')
+    parser.set_defaults(isMaster=True)
     args = parser.parse_args()
 
-    if args.master:
+    if args.isMaster:
         print 'Starting MASTER'
         pong = PongMaster()
     else:

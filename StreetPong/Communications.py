@@ -20,6 +20,7 @@ class Communications(object):
 		print 'Master recieved', msg
 		s.write(msg)
 		print 'Master sent', msg
+		print 'Communincations spec out'
 
 	def testSlave(s):
 		print 'Testing coms'
@@ -28,6 +29,7 @@ class Communications(object):
 		print 'Slave sent', msg
 		rsp = s.read()
 		print 'Slave recieved', rsp
+		print 'Communincations spec out'
 
 	def writeDict(s, d):
 		s.port.write(repr(d) + s.TERM)
