@@ -24,11 +24,11 @@ class Buttons(object):
         s.buttonR_pin = os.path.join(s.GPIO_PIN_PATH, 'gpio'+str(pin2))
 
         FP = open(buttonL_pin_mode, 'r+')
-        FP.write(s.INPUT)
+        FP.write(s.INPUT_PU)
         FP.close()
 
         FP = open(buttonR_pin_mode, 'r+')
-        FP.write(s.INPUT)
+        FP.write(s.INPUT_PU)
         FP.close()
 
     def getMove(s):

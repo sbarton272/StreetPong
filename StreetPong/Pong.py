@@ -38,7 +38,7 @@ class PongMaster(object):
     BALL_RADIUS = 10
     FPS = 50
     MAX_SCORE = 3
-    GAME_OVER_DELAY = 4800
+    GAME_OVER_DELAY = 180
     LEFT_BTN = 7
     RIGHT_BTN = 12
 
@@ -77,14 +77,14 @@ class PongMaster(object):
             
             if max(score) == s.MAX_SCORE:
                 
-                # Game over
+                # Game over start
                 s.view.gameOver()
-                s.gameOver = True
+                s.gameOver = GAME_OVER_DELAY
 
-            elif s.paused:
+            elif s.gameOver > 0:
 
-                # Paused
-                pass
+                # Cont game over
+                s.view.gameOver()
 
             else:
 
@@ -97,9 +97,8 @@ class PongMaster(object):
             # Send state to remote
             s.coms.writeGameState(gameState)
 
-            if s.gameOver:
-                pg.time.wait(s.GAME_OVER_DELAY)
-                s.gameOver = False
+            if s.gameOver > 0:
+                s.gameOver -= 1
                 s.model.reset()
 
        
