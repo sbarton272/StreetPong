@@ -36,7 +36,9 @@ class Communications(object):
         s.port.write(repr(d))
 
     def readDict(s):
-        return eval(s.port.readline())
+        d = s.port.readline().strip()
+        print d
+        return eval(d)
 
     def writeByte(s, b):
         s.port.write(str(b))
