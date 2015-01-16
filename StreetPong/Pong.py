@@ -151,7 +151,7 @@ class PongSlave(PongMaster):
     def __init__(s):
         PongMaster.__init__(s)
 
-    def run():
+    def run(s):
 
         clock = pg.time.Clock()
 
