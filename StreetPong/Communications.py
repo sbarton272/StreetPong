@@ -37,7 +37,9 @@ class Communications(object):
         s.port.write(repr(d))
 
     def readDict(s):
-        d = s.port.readline().strip()
+        d = ''
+        while len(d) <= 1:
+            d = s.port.readline().strip()
         print 'Coms read', d
         return eval(d)
 
