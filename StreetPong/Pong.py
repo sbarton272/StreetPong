@@ -49,8 +49,8 @@ class PongMaster(object):
         s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
 
         pg.init()
-        s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
-        #s.screen = pg.display.set_mode(s.size)
+        #s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
+        s.screen = pg.display.set_mode(s.size)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
