@@ -33,12 +33,13 @@ class Communications(object):
 		print 'Communincations spec out'
 
 	def writeDict(s, d):
+		print 'Coms write dict:', d
 		s.port.write(repr(d) + s.TERM)
 
 	def readDict(s):
 		d = s.port.readline() + s.TERM
 		dct = eval(d)
-		print d, dct
+		print 'Coms read dict:', d, dct
 		return dct
 
 	def writeByte(s, b):
