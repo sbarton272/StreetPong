@@ -87,9 +87,9 @@ class PongMaster(object):
                 # Cont game over
                 s.view.gameOver()
 
-            elif s.gameOver <= 0:
+            elif s.gameOver = 0:
 
-                s.model.reset()                
+                s.model.reset()
 
             else:
 
@@ -102,7 +102,7 @@ class PongMaster(object):
             # Send state to remote
             s.coms.writeGameState(gameState)
 
-            if s.gameOver > 0:
+            if s.gameOver >= 0:
                 s.gameOver -= 1
 
        
