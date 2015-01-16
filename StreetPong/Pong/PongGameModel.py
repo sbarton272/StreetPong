@@ -68,6 +68,13 @@ class PongGameModel(object):
 
         return (s.p1.score, s.p2.score)
 
+    def set(s, paddle1, paddle2, score1, score2, ball):
+        s.p1.setLoc(paddle1)
+        s.p2.setLoc(paddle2)
+        s.p1.setScore(score1)
+        s.p2.setScore(score2)
+        s.ball.setLoc(ball[0],ball[1])
+
     #==== Private Methods ======================================
 
     def _checkCollisions(s):

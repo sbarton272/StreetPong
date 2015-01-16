@@ -11,15 +11,17 @@ Pong Game View
 #=====================================================
 
 import pygame as pg
-import sys
+import sys, argparse
 import Pong.PongGameModel as Model
 import Pong.PongGameView as View
+from Buttons import Buttons
+from Communications import Communications
 
 #=====================================================
 # Pong
 #=====================================================
 
-class Pong(object):
+class PongMaster(object):
 
     # TODO pausing/timeout if no input
     # TODO better graphics
@@ -37,9 +39,14 @@ class Pong(object):
     FPS = 50
     MAX_SCORE = 3
     GAME_OVER_DELAY = 4800
+    LEFT_BTN = 7
+    RIGHT_BTN = 12
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
+
+        s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
+        s.coms = Communications()
 
         pg.init()
         # s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
@@ -58,16 +65,17 @@ class Pong(object):
         clock = pg.time.Clock()
 
         while True:
-            cmds = s._handleEvts()
 
-            score = s.model.step(cmds[0], cmds[1])
+            # Get moves
+            mv = s.coms.readByte()
+            cmds = s._handleEvts()
+            score = s.model.step(cmds[0], mv)
             
             if max(score) == s.MAX_SCORE:
+                
                 # Game over
-
                 s.view.gameOver()
                 s.model.reset()
-                pg.time.wait(s.GAME_OVER_DELAY)
 
             elif s.paused:
 
@@ -79,6 +87,15 @@ class Pong(object):
                 # Playing
                 s.view.show()
                 clock.tick(s.FPS)
+
+            gameState = s._packageGameState();
+
+            # Send state to remote
+            s.coms.writeDict(gameState)
+
+            if gameState['gameOver']:
+                pg.time.wait(s.GAME_OVER_DELAY)
+
        
     def _handleEvts(s):
         move1 = s.model.MV_STAY
@@ -105,11 +122,64 @@ class Pong(object):
 
         return (move1, move2)
 
+    def _getBtns(s):
+        res = s.MV_STAY
+        mv = s.btns.getMove()
+
+        if mv == Buttons.RIGHT:
+            res = s.MV_RIGHT
+        elif mv == Buttons.LEFT:
+            res = s.MV_LEFT
+
+        return res
+
+    def _packageGameState(s):
+        gameState = {}
+        gameState['paddle1'] = s.model.p1.paddleLoc
+        gameState['paddle2'] = s.model.p2.paddleLoc
+        gameState['score1'] = s.model.p1.score
+        gameState['score2'] = s.model.p2.score
+        gameState['ball'] = (s.model.ball.x, s.model.ball.y)
+        return gameState
+
     def _quit(s):
         pg.display.quit()
         sys.exit()
 
+class PongSlave(PongMaster):
+    
+    def __init__(s):
+        PongMaster.__init__(s)
+
+    def run():
+
+        clock = pg.time.Clock()
+
+        while True:
+            # Send button presses
+            s.coms.writeByte(s._getBtns())
+
+            gameState = s.coms.readDict()
+
+            # Playing
+            s.model.set(gameState['paddle1'], gameState['paddle2'],
+                gameState['score1'], gameState['score2'], gameState['ball'])
+
+            if gameState['gameOver']:
+                s.view.gameOver()
+            else:
+                s.view.show()
+
+            clock.tick(s.FPS)
+
 
 if __name__ == '__main__':
-    pong = Pong()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m','--master', help='specify master')
+    args = parser.parse_args()
+
+    if args.master:
+        pong = PongMaster()
+    else:
+        pong = PongSlave()
     pong.run()

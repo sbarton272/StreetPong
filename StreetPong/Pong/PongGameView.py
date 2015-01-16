@@ -34,7 +34,7 @@ class PongGameView(object):
         s.w = windowW
         s.h = windowH
         s.endZone = endZone
-        s.paddleW = paddleW
+        s.paddleW = paddleW*.9
         s.paddleH = paddleH
         s.ballRadius = int(radius)
 
