@@ -34,13 +34,13 @@ class Buttons(object):
     def getMove(s):
 
         # getting input from L button
-        tempL = []
+        tempL = ['']
         FP = open(s.buttonL_pin, 'r')
         tempL[0] = FP.read()
         FP.close()
         
         # getting input from R button
-        tempR = []
+        tempR = ['']
         FP = open(s.buttonR_pin, 'r')
         tempR[0] = FP.read()
         FP.close()
