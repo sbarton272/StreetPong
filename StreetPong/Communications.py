@@ -34,13 +34,13 @@ class Communications(object):
 
     def writeGameState(s, gs):
         args = []
-        args.append(gs['paddle1'])
-        args.append(gs['paddle2'])
-        args.append(gs['score1'])
-        args.append(gs['score2'])
-        args.append(gs['ballX'])
-        args.append(gs['ballY'])
-        args.append(gs['gameOver'])
+        args.append(str(gs['paddle1']))
+        args.append(str(gs['paddle2']))
+        args.append(str(gs['score1']))
+        args.append(str(gs['score2']))
+        args.append(str(gs['ballX']))
+        args.append(str(gs['ballY']))
+        args.append(str(gs['gameOver']))
 
         msg = ' '.join(args)
         print 'Coms write', msg
