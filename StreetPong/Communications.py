@@ -34,13 +34,15 @@ class Communications(object):
 
     def writeDict(s, d):
         print 'Coms write', d
-        s.port.write(repr(d))
+        s.port.write(repr(d) + s.TERM)
 
     def readDict(s):
         d = ''
+        i = 0
         while len(d) <= 1:
+            i += 1
             d = s.port.readline().strip()
-        print 'Coms read', d
+            print 'Coms read', i, d
         return eval(d)
 
     def writeByte(s, b):
