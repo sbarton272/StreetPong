@@ -57,13 +57,13 @@ class Communications(object):
         args = m.split(' ')
 
         gameState = {}
-        gameState['paddle1'] = args[0]
-        gameState['paddle2'] = args[1]
-        gameState['score1'] = args[2]
-        gameState['score2'] = args[3]
-        gameState['ballX'] = args[4]
-        gameState['ballY'] = args[5]
-        gameState['gameOver'] = args[6]
+        gameState['paddle1'] = float(args[0])
+        gameState['paddle2'] = float(args[1])
+        gameState['score1'] = int(args[2])
+        gameState['score2'] = int(args[3])
+        gameState['ballX'] = float(args[4])
+        gameState['ballY'] = float(args[5])
+        gameState['gameOver'] = int(args[6])
         return gameState
 
     def writeByte(s, b):
