@@ -89,6 +89,7 @@ class PongMaster(object):
 
             elif s.gameOver == 0:
 
+                # Final game over
                 s.model.reset()
 
             else:
@@ -142,7 +143,7 @@ class PongMaster(object):
         gameState['score2'] = s.model.p2.score
         gameState['ballX'] = s.model.ball.x
         gameState['ballY'] = s.model.ball.y
-        if s.gameOver:
+        if s.gameOver >= 1:
             gameState['gameOver'] = 1
         else:
             gameState['gameOver'] = 0
@@ -172,7 +173,7 @@ class PongSlave(PongMaster):
             s.model.set(gameState['paddle1'], gameState['paddle2'],
                 gameState['score1'], gameState['score2'], (gameState['ballX'], gameState['ballY']))
 
-            if gameState['gameOver'] == 1:
+            if gameState['gameOver'] >= 1:
                 s.view.gameOver()
             else:
                 s.view.show()
