@@ -42,7 +42,7 @@ class Communications(object):
         args.append(str(gs['ballY']))
         args.append(str(gs['gameOver']))
 
-        msg = ' '.join(args)
+        msg = '   '.join(args)
         print 'Coms write', msg
         s.port.write(msg + s.TERM)
 
@@ -57,12 +57,12 @@ class Communications(object):
         args = m.split(' ')
 
         gameState = {}
-        gameState['paddle1'] = float(args[0])
-        gameState['paddle2'] = float(args[1])
+        gameState['paddle1'] = int(args[0])
+        gameState['paddle2'] = int(args[1])
         gameState['score1'] = int(args[2])
         gameState['score2'] = int(args[3])
-        gameState['ballX'] = float(args[4])
-        gameState['ballY'] = float(args[5])
+        gameState['ballX'] = int(args[4])
+        gameState['ballY'] = int(args[5])
         gameState['gameOver'] = int(args[6])
         return gameState
 
