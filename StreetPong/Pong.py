@@ -31,19 +31,18 @@ class PongMaster(object):
     # TODO larger paddles
     # TODO ball speed-up
 
-    def __init__(s):
-        s.WIDTH = 480
-        s.HEIGHT = 480
-        s.PADDLE_W = 50
-        s.PADDLE_H = 6
-        s.END_ZONE = 30
-        s.BALL_RADIUS = 10
-        s.FPS = 50
-        s.MAX_SCORE = 3
-        s.GAME_OVER_DELAY = 4800
-        s.LEFT_BTN = 7
-        s.RIGHT_BTN = 12
+    WIDTH, HEIGHT = 480, 480
+    PADDLE_W = 50
+    PADDLE_H = 6
+    END_ZONE = 30
+    BALL_RADIUS = 10
+    FPS = 50
+    MAX_SCORE = 3
+    GAME_OVER_DELAY = 4800
+    LEFT_BTN = 7
+    RIGHT_BTN = 12
 
+    def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
 
         s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
@@ -124,13 +123,13 @@ class PongMaster(object):
         return (move1, move2)
 
     def _getBtns(s):
-        res = s.MV_STAY
+        res = s.model.MV_STAY
         mv = s.btns.getMove()
 
         if mv == Buttons.RIGHT:
-            res = s.MV_RIGHT
+            res = s.model.MV_RIGHT
         elif mv == Buttons.LEFT:
-            res = s.MV_LEFT
+            res = s.model.MV_LEFT
 
         return res
 
