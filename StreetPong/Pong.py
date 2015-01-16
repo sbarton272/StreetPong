@@ -175,7 +175,7 @@ class PongSlave(PongMaster):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m','--master', help='specify master')
+    parser.add_argument('-m','--master', nargs='?', help='specify master')
     args = parser.parse_args()
 
     if args.master:
