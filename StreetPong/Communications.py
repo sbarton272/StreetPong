@@ -1,5 +1,5 @@
 
-import serial, time
+import serial, time, ast
 
 class Communications(object):
 
@@ -38,7 +38,7 @@ class Communications(object):
 
     def readDict(s):
         d = s.port.readline() + s.TERM
-        dct = eval(d)
+        dct = ast.literal_eval(d)
         print 'Coms read dict:', d, dct
         return dct
 

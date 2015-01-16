@@ -45,8 +45,8 @@ class PongMaster(object):
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
 
-        s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
         s.coms = Communications()
+        s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
 
         pg.init()
         # s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
