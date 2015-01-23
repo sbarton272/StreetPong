@@ -50,8 +50,8 @@ class PongMaster(object):
 
         pg.init()
         #s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
-        screen = pg.display.set_mode(s.size)
-        s.screen = pg.transform.rotate(screen, 90)
+        s.screen = pg.display.set_mode(s.size)
+        #s.screen = pg.transform.rotate(screen, 90)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
