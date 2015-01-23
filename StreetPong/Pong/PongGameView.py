@@ -40,6 +40,9 @@ class PongGameView(object):
 
         s.midLine = pg.Rect(0, s.h/2 - MIDLINE_H/2, s.w, MIDLINE_H)
 
+        s.surf = pygame.Surface((100, 100))
+        s.surf.fill((255, 255, 255))
+
     #==== Public Methods ========================================
 
     def show(s):
@@ -47,6 +50,17 @@ class PongGameView(object):
         s._showPaddles()
         s._showBall()
         s._showScores()
+
+        bigger = pygame.Rect(0, 0, 100, 50)
+        pg.draw.rect(surf, (100, 0, 0), bigger)
+        blittedRect = screen.blit(s.surf, where)
+
+        oldCenter = blittedRect.get_rect().center
+        rotSurf = pg.transform.rotate(s.surf, 90)
+        rotRect = rotSurf.get_rect()
+        rotRect.center = oldCenter
+        screen.blit(rotSurf, rotRect)
+
         pg.display.flip()
 
     def gameOver(s):
@@ -68,6 +82,8 @@ class PongGameView(object):
         textpos.centerx = s.screen.get_rect().centerx
         textpos.centery = s.screen.get_rect().centery - 2*textpos.h/2
         s.screen.blit(text, textpos)
+
+
 
         pg.display.flip()
 
