@@ -51,7 +51,7 @@ class PongGameView(object):
         s._showBall()
         s._showScores()
 
-        bigger = pygame.Rect(0, 0, 100, 50)
+        bigger = pg.Rect(0, 0, 100, 50)
         pg.draw.rect(surf, (100, 0, 0), bigger)
         blittedRect = screen.blit(s.surf, where)
 
