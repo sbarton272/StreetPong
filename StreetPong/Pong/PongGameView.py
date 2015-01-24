@@ -49,10 +49,8 @@ class PongGameView(object):
         s._showBall()
         s._showScores()
 
-        s.screen = pg.transform.rotate(s.screen, 90)
-        s.rootScreen.blit(s.screen, (0,0))
-        pg.display.flip()
-
+        s._rotDisplay()
+        
     def gameOver(s):
         s._showBoard()
         s._showPaddles()
@@ -73,8 +71,11 @@ class PongGameView(object):
         textpos.centery = s.screen.get_rect().centery - 2*textpos.h/2
         s.screen.blit(text, textpos)
 
+        s._rotDisplay()
 
-
+    def _rotDisplay(s):
+        s.screen = pg.transform.rotate(s.screen, 90)
+        s.rootScreen.blit(s.screen, (0,0))
         pg.display.flip()
 
     def _showBoard(s):
