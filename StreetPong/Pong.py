@@ -42,7 +42,7 @@ class PongMaster(object):
     GAME_OVER_DELAY = 60
     LEFT_BTN = 7
     RIGHT_BTN = 12
-    DEBUG = True
+    DEBUG = False
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
