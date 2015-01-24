@@ -21,6 +21,7 @@ BLACK = (0, 0, 0)
 GRAY = (127, 127, 127)
 MIDLINE_H = 6
 FONT_SIZE = 60
+ROTATION = -90
 
 #=====================================================
 # PongGame
@@ -50,7 +51,7 @@ class PongGameView(object):
         s._showScores()
 
         s._rotDisplay()
-        
+
     def gameOver(s):
         s._showBoard()
         s._showPaddles()
@@ -74,7 +75,7 @@ class PongGameView(object):
         s._rotDisplay()
 
     def _rotDisplay(s):
-        s.screen = pg.transform.rotate(s.screen, 90)
+        s.screen = pg.transform.rotate(s.screen, ROTATION)
         s.rootScreen.blit(s.screen, (0,0))
         pg.display.flip()
 
