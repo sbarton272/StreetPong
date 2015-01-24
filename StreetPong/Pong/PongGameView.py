@@ -36,7 +36,7 @@ class PongGameView(object):
         s.w = windowW
         s.h = windowH
         s.endZone = endZone
-        s.paddleW = paddleW*.9
+        s.paddleW = paddleW*.8
         s.paddleH = paddleH
         s.ballRadius = int(radius)
 
@@ -104,13 +104,13 @@ class PongGameView(object):
         text = font.render(str(s.game.p1.score), 1, GRAY)
         textpos = text.get_rect()
         textpos.centerx = x
-        textpos.centery = y
+        textpos.centery = 2*y
         s.screen.blit(text, textpos)
 
         text = font.render(str(s.game.p2.score), 1, GRAY)
         textpos = text.get_rect()
         textpos.centerx = x
-        textpos.centery = 2*y
+        textpos.centery = y
         s.screen.blit(text, textpos)
 
     def _showBall(s):

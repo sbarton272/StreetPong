@@ -44,6 +44,7 @@ class PongGameModel(object):
         s.ball = Ball(ballRadius)
         s.p1 = Player(name1, s.w, paddleWidth)
         s.p2 = Player(name2, s.w, paddleWidth)
+        s.players = {name1: s.p1, name2: s.p2}
 
         s.reset()
 
@@ -78,6 +79,9 @@ class PongGameModel(object):
 
     def getScore(s):
         return (s.p1.score, s.p2.score)
+
+    def getPlayer(s, name):
+        return s.players.get(name, None)
 
     #==== Private Methods ======================================
 

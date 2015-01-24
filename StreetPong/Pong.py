@@ -16,21 +16,14 @@ import sys, argparse
 import Pong.PongGameModel as Model
 import Pong.PongGameView as View
 from Buttons import Buttons
-from Communications import Communications
+from Keys import Keys
+from PongAI import PongAI
 
 #=====================================================
 # Pong
 #=====================================================
 
 class PongMaster(object):
-
-    # TODO pausing/timeout if no input
-    # TODO better graphics
-    # TODO AI when in resting mode
-    # TODO correct screen size
-    # TODO ball goes over endline
-    # TODO larger paddles
-    # TODO ball speed-up
 
     WIDTH, HEIGHT = 600, 1200
     PADDLE_W = 50
@@ -39,20 +32,20 @@ class PongMaster(object):
     BALL_RADIUS = 10
     FPS = 80
     MAX_SCORE = 3
-    GAME_OVER_DELAY = 60
+    GAME_OVER_DELAY = 120
     LEFT_BTN = 7
     RIGHT_BTN = 12
-    DEBUG = False
+    LEFT_KEY = pg.K_a
+    RIGHT_KEY = pg.K_d
+    DEBUG = True
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
 
         if (s.DEBUG):
-            s.coms = None
-            s.btns = None
+            s.usrIn = Keys(s.LEFT_KEY, s.RIGHT_KEY)
         else:
-            s.coms = Communications()
-            s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
+            s.usrIn = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
 
         pg.init()
         flippedDims = (s.HEIGHT, s.WIDTH)
@@ -63,31 +56,26 @@ class PongMaster(object):
         s.view = View.PongGameView(s.model, s.screen, s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W, s.PADDLE_H, 
                 s.BALL_RADIUS)
 
+        s.AI = PongAI(s.model, s.model.p2.name)
+
         s.paused = False
         s.gameOver = False
-
-        if (s.DEBUG):
-            s.view.show()
-            time.sleep(2)
-            pg.quit()
-            sys.exit()
 
     #==== Public Methods ========================================
 
     def run(s):
-        s.coms.testMaster()
 
         clock = pg.time.Clock()
 
         while True:
 
             # Get moves
-            mv1 = s._getBtns()
-            mv2 = int(s.coms.readByte())
+            mv1 = s._getInputs()
+            mv2 = s.AI.getMove()
             cmds = s._handleEvts()
             score = s.model.getScore()
             
-            if max(score) == s.MAX_SCORE:
+            if (max(score) == s.MAX_SCORE) and (s.gameOver < 0):
                 
                 # Game over start
                 s.view.gameOver()
@@ -110,11 +98,6 @@ class PongMaster(object):
                 s.view.show()
                 clock.tick(s.FPS)
 
-            gameState = s._packageGameState();
-
-            # Send state to remote
-            s.coms.writeGameState(gameState)
-
             if s.gameOver >= 0:
                 s.gameOver -= 1
 
@@ -136,13 +119,13 @@ class PongMaster(object):
 
         return (move1, move2)
 
-    def _getBtns(s):
+    def _getInputs(s):
         res = s.model.MV_STAY
-        mv = s.btns.getMove()
+        mv = s.usrIn.getMove()
 
-        if mv == Buttons.RIGHT:
+        if mv == s.usrIn.RIGHT:
             res = s.model.MV_RIGHT
-        elif mv == Buttons.LEFT:
+        elif mv == s.usrIn.LEFT:
             res = s.model.MV_LEFT
 
         return res
@@ -177,7 +160,7 @@ class PongSlave(PongMaster):
 
         while True:
             # Send button presses
-            s.coms.writeByte(s._getBtns())
+            s.coms.writeByte(s._getInputs())
 
             gameState = s.coms.readGameState()
 
