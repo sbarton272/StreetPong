@@ -75,8 +75,8 @@ class PongGameView(object):
         s._rotDisplay()
 
     def _rotDisplay(s):
-        s.screen = pg.transform.rotate(s.screen, ROTATION)
-        s.rootScreen.blit(s.screen, (0,0))
+        screen = pg.transform.rotate(s.screen, ROTATION)
+        s.rootScreen.blit(screen, (0,0))
         pg.display.flip()
 
     def _showBoard(s):
