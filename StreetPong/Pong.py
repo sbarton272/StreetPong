@@ -57,8 +57,6 @@ class PongMaster(object):
         pg.init()
         flippedDims = (s.HEIGHT, s.WIDTH)
         s.screen = pg.display.set_mode(flippedDims)
-        #s.screenSurface = pg.Surface(s.size)
-        #s.screenSurface = pg.transform.rotate(s.screenSurface, 90)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
@@ -70,7 +68,6 @@ class PongMaster(object):
 
         if (s.DEBUG):
             s.view.show()
-            # TODO Remove screen.blit(s.view, (0,0))
             time.sleep(2)
             pg.quit()
             sys.exit()
