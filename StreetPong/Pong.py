@@ -10,6 +10,7 @@ Pong Game View
 # Imports
 #=====================================================
 
+import time
 import pygame as pg
 import sys, argparse
 import Pong.PongGameModel as Model
@@ -31,7 +32,7 @@ class PongMaster(object):
     # TODO larger paddles
     # TODO ball speed-up
 
-    WIDTH, HEIGHT = 1200, 600
+    WIDTH, HEIGHT = 600, 1200
     PADDLE_W = 50
     PADDLE_H = 6
     END_ZONE = 30
@@ -41,20 +42,23 @@ class PongMaster(object):
     GAME_OVER_DELAY = 60
     LEFT_BTN = 7
     RIGHT_BTN = 12
+    DEBUG = True
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
 
-        s.coms = Communications()
-        s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
+        if (s.DEBUG):
+            s.coms = None
+            s.btns = None
+        else:
+            s.coms = Communications()
+            s.btns = Buttons(s.LEFT_BTN, s.RIGHT_BTN)
 
         pg.init()
-        #s.screen = pg.display.set_mode(s.size, pg.FULLSCREEN)
-        s.screen = pg.display.set_mode(s.size)
-
-        #oldCenter = s.screen.get_rect().center
-        #s.screen = pg.transform.rotate(s.screen, 90)
-        #s.screen.get_rect(center = oldCenter)
+        flippedDims = (s.HEIGHT, s.WIDTH)
+        s.screen = pg.display.set_mode(flippedDims)
+        #s.screenSurface = pg.Surface(s.size)
+        #s.screenSurface = pg.transform.rotate(s.screenSurface, 90)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
@@ -64,6 +68,12 @@ class PongMaster(object):
         s.paused = False
         s.gameOver = False
 
+        if (s.DEBUG):
+            s.view.show()
+            # TODO Remove screen.blit(s.view, (0,0))
+            time.sleep(2)
+            pg.quit()
+            sys.exit()
 
     #==== Public Methods ========================================
 

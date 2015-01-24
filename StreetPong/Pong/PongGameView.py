@@ -28,9 +28,10 @@ FONT_SIZE = 60
 
 class PongGameView(object):
 
-    def __init__(s, game, screen, windowW, windowH, endZone, paddleW, paddleH, radius):
+    def __init__(s, game, rootScreen, windowW, windowH, endZone, paddleW, paddleH, radius):
         s.game = game
-        s.screen = screen
+        s.rootScreen = rootScreen
+        s.screen = pg.Surface((windowW, windowH))
         s.w = windowW
         s.h = windowH
         s.endZone = endZone
@@ -40,9 +41,6 @@ class PongGameView(object):
 
         s.midLine = pg.Rect(0, s.h/2 - MIDLINE_H/2, s.w, MIDLINE_H)
 
-        s.surf = pygame.Surface((100, 100))
-        s.surf.fill((255, 255, 255))
-
     #==== Public Methods ========================================
 
     def show(s):
@@ -51,16 +49,8 @@ class PongGameView(object):
         s._showBall()
         s._showScores()
 
-        bigger = pg.Rect(0, 0, 100, 50)
-        pg.draw.rect(surf, (100, 0, 0), bigger)
-        blittedRect = screen.blit(s.surf, where)
-
-        oldCenter = blittedRect.get_rect().center
-        rotSurf = pg.transform.rotate(s.surf, 90)
-        rotRect = rotSurf.get_rect()
-        rotRect.center = oldCenter
-        screen.blit(rotSurf, rotRect)
-
+        s.screen = pg.transform.rotate(s.screen, 90)
+        s.rootScreen.blit(s.screen, (0,0))
         pg.display.flip()
 
     def gameOver(s):
@@ -106,7 +96,7 @@ class PongGameView(object):
     def _showScores(s):
         font = pg.font.Font(None, FONT_SIZE)
 
-        x = s.screen.get_rect().w / 6
+        x = s.screen.get_rect().w / 2
         y = s.screen.get_rect().h / 3
 
         text = font.render(str(s.game.p1.score), 1, GRAY)
