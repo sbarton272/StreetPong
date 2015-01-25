@@ -49,7 +49,7 @@ class PongMaster(object):
 
         pg.init()
         flippedDims = (s.HEIGHT, s.WIDTH)
-        s.screen = pg.display.set_mode(flippedDims)
+        s.screen = pg.display.set_mode(flippedDims, pg.FULLSCREEN)
 
         s.model = Model.PongGameModel('Player1', 'Player2', s.WIDTH, s.HEIGHT, s.END_ZONE, s.PADDLE_W,
                 s.BALL_RADIUS)
