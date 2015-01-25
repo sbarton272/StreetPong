@@ -37,7 +37,7 @@ class PongMaster(object):
     RIGHT_BTN = 12
     LEFT_KEY = pg.K_a
     RIGHT_KEY = pg.K_d
-    DEBUG = True
+    DEBUG = False
 
     def __init__(s):
         s.size = (s.WIDTH, s.HEIGHT)
