@@ -25,7 +25,7 @@ class PongGameModel(object):
     SCORE_P1 = 1
     SCORE_P2 = 2
     STARTING_VEL_ANGLE = 30
-    STARTING_VEL_MAG = 10
+    STARTING_VEL_MAG = 15
     VEL_INC = 1;
 
     """
